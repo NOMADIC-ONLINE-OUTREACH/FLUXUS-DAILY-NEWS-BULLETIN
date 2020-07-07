@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> FLUXUS DAILY NEWS BULLETIN </title>
+</head>
+
+<body>
+	<h1 style="text-align:center">FLUXUS DAILY NEWS BULLETIN</h1>
+	<hr>
+	<p style="text-align:center">reverse engineering the global absurd<p>
+	<hr>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+	
+	$("#btnDada").click(function(){
+		
+		var text = $("#txtOriginal").val();
+		
+		text = text.replace(/\.|,|;/g,"");   //eliminate punctutaion  
+		//the g makes it a global replace not a replacement of the first occurrence 
+		text = text.toLowerCase();           //put all text into lower case 
+		
+		text = text.replace(/\bi\b/g,"I");
+		//  \b means word boundary so \bi\b means an i by iteslf which should be I 
+		//alert(text);
+
+		var whiteSpace = new RegExp(/\s+/);
+		var words = text.split(whiteSpace);  //parse the text on white space to make array of words 
+		if(words[words.length-1]=="")
+		{
+			words.pop();  //if last token is empty ?  eliminate it 
+		}
+		
+		//shuffle up the words 
+		
+		var i,j; 
+		var swapWord;
+		for(i=0;i<words.length;i++){
+			j = Math.floor(Math.random()*words.length);
+			swapWord = words[i];
+			words[i]=words[j];
+			words[j]=swapWord;
+		}
+	
+
+	
+		$("#txtDada").html(words[0].charAt(0).toUpperCase() + words[0].substring(1)+ " " );
+		//start with first word with first letter capitalized -followed by a space
+
+		for(i=1;i<words.length;i++){
+			$("#txtDada").append(words[i]);
+			
+			if(Math.random()<0.8){
+				//continue current line
+				$("#txtDada").append(" ");
+			}
+			else{
+				//end current line with period or semicolon start a new line
+				if(Math.random()<.5){
+					$("#txtDada").append(".\n<br \>");
+				}
+				else
+				{
+					$("#txtDada").append(";\n<br />");
+				}
+				$("#txtDada").append(words[i+1].charAt(0).toUpperCase() + words[i+1].substring(1) + " ");
+				//start new line capitalize first letter 
+				i++;
+			}
+		}
+	
+	
+		});  //end btnDada click
+	
+}); //end ready
+</script>
+	
+</body>
+
+</html>
